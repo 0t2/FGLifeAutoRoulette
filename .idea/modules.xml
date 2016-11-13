@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FGLifeRoulette.iml" filepath="$PROJECT_DIR$/.idea/modules/FGLifeRoulette.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FGLifeRoulette_main.iml" filepath="$PROJECT_DIR$/.idea/modules/FGLifeRoulette_main.iml" group="FGLifeRoulette" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FGLifeRoulette_test.iml" filepath="$PROJECT_DIR$/.idea/modules/FGLifeRoulette_test.iml" group="FGLifeRoulette" />
+    </modules>
+  </component>
+</project>

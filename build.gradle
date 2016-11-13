@@ -1,0 +1,74 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
+}
+
+plugins {
+    id 'java'
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "1.2.4"
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'docker'
+
+group 'me.0t2'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+mainClassName = 'me._0t2.AutoRoulette'
+
+dependencies {
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.1'
+    compile group: 'net.sourceforge.tess4j', name: 'tess4j', version: '3.2.1'
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
+}
+
+shadowJar {
+    baseName = 'fglife-auto-roulette'
+    classifier = null
+    version = null
+}
+
+task buildDocker(type: Docker, dependsOn: ['clean', 'shadowJar']) {
+    group = 'me.0t2'
+    applicationName = shadowJar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    tagVersion = 'latest'
+    doFirst{
+        copy {
+            from 'build/libs/fglife-auto-roulette.jar'
+            into stageDir
+        }
+        copy {
+            from 'tessdata'
+            into new File(stageDir, 'tessdata')
+        }
+    }
+}
+
+task greeting(type: GreetingTask, dependsOn: ['clean', 'shadowJar']) {
+    greeting = 'greetings from GreetingTask'
+}
+
+class GreetingTask extends DefaultTask {
+    String greeting = 'hello from GreetingTask'
+
+    @TaskAction
+    def greet() {
+        println greeting
+    }
+}
